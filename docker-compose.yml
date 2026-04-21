@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    ports:
+      - "1245:1245"
+    environment:
+      POSTGRES_DB: ticketing
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 1234
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7
+    container_name: ticket-redis
+    ports:
+      - "2356:2356"
+    restart: always
+
+  spring:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ticket-spring
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - "8147:8147"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:1245/ticketdb
+      SPRING_DATASOURCE_USERNAME: ticketuser
+      SPRING_DATASOURCE_PASSWORD: ticketpass
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 2356
+    restart: always
+
+
+volumes:
+  postgres_data:
