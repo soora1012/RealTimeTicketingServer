@@ -1,0 +1,25 @@
+spring:
+  profiles:
+    active: local
+
+  application:
+    name: ticketing-server
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+server:
+  port: 8080
+
+logging:
+  level:
+    root: info
+
+security:
+  jwt:
+    secret: "my-super-secret-jwt-key-1234567890123456"
+    access-exp-min: 60

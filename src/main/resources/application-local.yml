@@ -1,0 +1,25 @@
+spring:
+  config:
+    activate:
+      on-profile: local
+
+  datasource:
+    url: jdbc:postgresql://54.116.44.41:5432/ticketing
+    username: admin
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update # 개발 중 테이블 자동 반영
+    show-sql: true # SQL 출력
+    properties:
+      hibernate:
+        format_sql: true # SQL 보기 좋게
+        use_sql_comments: true # JPA 동작 힌트 주석 표시
+
+logging:
+  level:
+    org.hibernate.SQL: debug # 실행 SQL 출력
+    org.hibernate.orm.jdbc.bind: trace # SQL 파라미터 출력
+    org.hibernate.engine.jdbc.spi.SqlExceptionHelper: error # SQL 예외 출력
