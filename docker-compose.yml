@@ -16,7 +16,7 @@ services:
 
   redis:
     image: redis:7
-    container_name: ticket-redis
+    container_name: ticketing-redis
     ports:
       - "2356:6379"
     restart: always
@@ -25,20 +25,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: ticket-spring
+    container_name: ticketing-spring
     depends_on:
       - postgres
       - redis
     ports:
       - "8147:8147"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:1245/ticketdb
-      SPRING_DATASOURCE_USERNAME: ticketuser
-      SPRING_DATASOURCE_PASSWORD: ticketpass
-      SPRING_DATA_REDIS_HOST: redis
-      SPRING_DATA_REDIS_PORT: 2356
+      SPRING_PROFILES_ACTIVE: prod
     restart: always
-
 
 volumes:
   postgres_data:
