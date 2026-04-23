@@ -4,7 +4,7 @@ spring:
       on-profile: local
 
   datasource:
-    url: jdbc:postgresql://54.116.44.41:1245/ticketing
+    url: jdbc:postgresql://ec2-54-116-44-41.ap-northeast-2.compute.amazonaws.com:1245/ticketing
     username: admin
     password: 1234
     driver-class-name: org.postgresql.Driver
