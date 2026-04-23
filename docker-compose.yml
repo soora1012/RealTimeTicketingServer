@@ -6,7 +6,7 @@ services:
     container_name: postgres
     restart: always
     ports:
-      - "1245:1245"
+      - "1245:5432"
     environment:
       POSTGRES_DB: ticketing
       POSTGRES_USER: admin
