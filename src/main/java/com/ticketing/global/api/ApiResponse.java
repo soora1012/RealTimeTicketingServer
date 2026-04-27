@@ -4,6 +4,8 @@ import com.ticketing.global.error.ErrorCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 public class ApiResponse<T> {
     private final boolean success;
@@ -19,6 +21,7 @@ public class ApiResponse<T> {
     public static <T> ApiResponse<T> ok(T data) {
         return new ApiResponse<>(true, data, null);
     }
+
 
     public static <T> ApiResponse<T> fail(String error) {
         return new ApiResponse<>(false, null, error);

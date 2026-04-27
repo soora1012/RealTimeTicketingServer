@@ -23,23 +23,29 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-            throws ServletException, IOException {
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain chain
+    ) throws ServletException, IOException {
 
         String token = resolveBearer(request);
+
         if (token != null) {
             try {
-                Claims claims = tokenProvider.parse(token).getBody();
-                String userId = claims.getSubject();
-                String role = String.valueOf(claims.get("role"));
+                Long userId = tokenProvider.getUserId(token);
+                String role = tokenProvider.getRole(token);
 
-                var auth = new UsernamePasswordAuthenticationToken(
-                        userId,
-                        null,
-                        List.of(new SimpleGrantedAuthority("ROLE_" + role))
-                );
-                SecurityContextHolder.getContext().setAuthentication(auth);
-            } catch (Exception ignored) {
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(
+                                userId,
+                                null,
+                                List.of(new SimpleGrantedAuthority("ROLE_" + role))
+                        );
+
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+
+            } catch (Exception e) {
                 SecurityContextHolder.clearContext();
             }
         }
@@ -49,8 +55,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String resolveBearer(HttpServletRequest request) {
         String header = request.getHeader("Authorization");
-        if (!StringUtils.hasText(header)) return null;
-        if (!header.startsWith("Bearer ")) return null;
+
+        if (!StringUtils.hasText(header)) {
+            return null;
+        }
+
+        if (!header.startsWith("Bearer ")) {
+            return null;
+        }
+
         return header.substring(7);
     }
 }

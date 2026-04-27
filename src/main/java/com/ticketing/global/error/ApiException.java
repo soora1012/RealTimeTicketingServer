@@ -1,9 +1,6 @@
 package com.ticketing.global.error;
 
 import lombok.Getter;
-import lombok.Setter;
-import org.apache.coyote.Response;
-
 
 @Getter
 public class ApiException extends RuntimeException {

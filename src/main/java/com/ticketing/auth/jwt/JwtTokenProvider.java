@@ -38,7 +38,19 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    public Jws<Claims> parse(String token) {
-        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+    public Claims getClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    public Long getUserId(String token) {
+        return Long.valueOf(getClaims(token).getSubject());
+    }
+
+    public String getRole(String token) {
+        return String.valueOf(getClaims(token).get("role"));
     }
 }
