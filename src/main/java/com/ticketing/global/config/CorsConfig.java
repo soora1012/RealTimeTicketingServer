@@ -14,12 +14,26 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOrigins(List.of("http://localhost:3001"));
-        config.setAllowedOrigins(List.of("https://df2njav4b350g.cloudfront.net"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true);
+        // 허용할 프론트 주소들
+        config.setAllowedOrigins(List.of(
+                "http://localhost:3001",
+                "https://df2njav4b350g.cloudfront.net"
+        ));
 
+        // 허용 HTTP Method
+        config.setAllowedMethods(List.of(
+                "GET",
+                "POST",
+                "PUT",
+                "DELETE",
+                "PATCH",
+                "OPTIONS"
+        ));
+
+        // 허용 Header
+        config.setAllowedHeaders(List.of("*"));
+        // 쿠키 / JWT Authorization 허용
+        config.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
