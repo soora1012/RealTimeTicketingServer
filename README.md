@@ -30,7 +30,7 @@
 - Jenkins
 - AWS EC2
 - GitHub Webhook
-- 
+
 ------------------------------
 # 아키텍처
  
