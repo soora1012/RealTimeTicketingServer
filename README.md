@@ -19,7 +19,7 @@
 - Spring Security
  JWT Authentication
 - Spring Data JPA
-- 
+
 ### 2️⃣ Database
 - PostgreSQL 15
 - Redis (예정)
@@ -33,7 +33,8 @@
 
 ------------------------------
 # 아키텍처
- 
+
+```
 GitHub Push
       ↓
 Jenkins Pipeline
@@ -42,10 +43,12 @@ Docker Compose
  ├─ Spring Boot
  ├─ PostgreSQL
  └─ Redis (Planned)
+```
 
 ------------------------------
 # 프로젝트 구조
 
+```
 src
  ├─ auth
  │   ├─ controller
@@ -67,6 +70,7 @@ src
  │   ├─ pagination
  │   └─ util
  │
+```
 
 ------------------------------
 # 주요특징
