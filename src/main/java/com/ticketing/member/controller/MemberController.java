@@ -15,13 +15,11 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("/list")
-    public ApiResponse<PageResponse<MemberResponse>> getMemberList(
-                                                           @RequestParam(defaultValue = "1") int page,
-                                                           @RequestParam(defaultValue = "10") int size,
-                                                           @RequestParam(required = false) String keyword) {
+    public ApiResponse<PageResponse<MemberResponse>> getMemberList(@RequestParam(defaultValue = "1") int page,
+                                                                   @RequestParam(defaultValue = "10") int size,
+                                                                   @RequestParam(required = false) String keyword) {
 
         PageResponse<MemberResponse> response = memberService.getMemberList(page, size, keyword);
-
         return ApiResponse.ok(response);
     }
 }

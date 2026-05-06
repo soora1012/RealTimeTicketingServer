@@ -1,18 +1,54 @@
 package com.ticketing.auth.service;
 
-import com.ticketing.auth.dto.TokenResponse;
+import com.ticketing.auth.dto.LoginResponse;
+import com.ticketing.auth.dto.LoginResult;
+import com.ticketing.auth.dto.PasswordResetResponse;
 import com.ticketing.auth.jwt.JwtTokenProvider;
+import com.ticketing.global.error.ApiException;
+import com.ticketing.global.error.ErrorCode;
+import com.ticketing.member.domain.Member;
+import com.ticketing.member.repository.MemberRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final BCryptPasswordEncoder passwordEncoder;
-    private final JwtTokenProvider tokenProvider;
+    private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
+
+    @Transactional
+    public LoginResult login(LoginResponse request) {
+        Member member = memberRepository.findByMemberId(request.getUserId())
+                .orElseThrow(() -> new ApiException(ErrorCode.LOGIN_FAILED));
+
+        if (!passwordEncoder.matches(request.getPassword(), member.getPassword())) {
+            throw new IllegalArgumentException("아이디 또는 비밀번호가 올바르지 않습니다.");
+        }
+        String token = jwtTokenProvider.createAccessToken(
+                member.getMemberPk(),
+                member.getMemberId()
+        );
+        LoginResponse response = LoginResponse.builder()
+                .userId(member.getMemberId())
+                .password(member.getPassword())
+                .build();
+        return new LoginResult(token, response);
+    }
+
+    @Transactional
+    public void resetPassword(PasswordResetResponse request) {
+        Member member = memberRepository.findByMemberId(request.getUserId())
+                .orElseThrow(() -> new ApiException(ErrorCode.LOGIN_FAILED));
+
+        String encodedPassword = passwordEncoder.encode(request.getNewPassword());
+        member.setPassword(encodedPassword);
+        member.setPasswordResetCount(member.getPasswordResetCount() +1);
+    }
 
 }
