@@ -1,0 +1,33 @@
+package com.ticketing.concert.domain;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name = "seat")
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
+public class Seat {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "seat_pk")
+    private long seatPk;
+
+    @Column(name = "section_name")
+    private String sectionName;
+
+    @Column(name = "row_name")
+    private String rowName;
+
+    @Column(name = "seat_number")
+    private String seatNumber;
+
+    @Builder.Default
+    @Column(name = "price")
+    private int price = 0;
+
+}

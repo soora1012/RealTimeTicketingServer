@@ -5,6 +5,7 @@ import com.ticketing.auth.dto.LoginResult;
 import com.ticketing.auth.dto.PasswordResetResponse;
 import com.ticketing.auth.service.AuthService;
 import com.ticketing.global.api.ApiResponse;
+import com.ticketing.global.config.SecurityProperties;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -19,16 +20,18 @@ import java.time.Duration;
 public class AuthController {
 
     private final AuthService authService;
+    private final SecurityProperties securityProperties;
 
     @PostMapping("/login")
     public ApiResponse<LoginResponse> login(@RequestBody LoginResponse request,
                                             HttpServletResponse response
     ) {
+
         LoginResult result = authService.login(request);
         ResponseCookie cookie = ResponseCookie.from("accessToken", result.getAccessToken())
                 .httpOnly(true)
-                .secure(true)
-                .sameSite("None")
+                .secure(securityProperties.getCookie().isSecure())
+                .sameSite(securityProperties.getCookie().getSameSite())
                 .path("/")
                 .maxAge(Duration.ofMinutes(30))
                 .build();
