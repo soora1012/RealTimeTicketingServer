@@ -31,5 +31,5 @@ logging:
 
 security:
   cookie:
-    secure: false
-    same-site: Lax
+    secure: true
+    same-site: None
