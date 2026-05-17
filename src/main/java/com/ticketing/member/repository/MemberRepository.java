@@ -10,10 +10,10 @@ import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
-    Page<Member> findByMemberIdContainingIgnoreCase(
-            String memberId,
+    Page<Member> findByLoginIdContainingIgnoreCase(
+            String loginId,
             Pageable pageable
     );
 
-    Optional<Member> findByMemberId(String memberId);
+    Optional<Member> findByLoginId(String loginId);
 }

@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PasswordResetResponse {
-    private String userId;
+    private String loginId;
     private String newPassword;
 }

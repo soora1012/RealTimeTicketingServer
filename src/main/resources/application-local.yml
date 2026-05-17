@@ -2,6 +2,10 @@ spring:
   config:
     activate:
       on-profile: local
+  data:
+    redis:
+      host: ec2-3-35-42-109.ap-northeast-2.compute.amazonaws.com
+      port: 2356
 
   datasource:
     url: jdbc:postgresql://ec2-3-35-42-109.ap-northeast-2.compute.amazonaws.com:1245/ticketing

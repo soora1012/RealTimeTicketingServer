@@ -34,6 +34,7 @@ public class CorsConfig {
         config.setAllowedHeaders(List.of("*"));
         // 쿠키 / JWT Authorization 허용
         config.setAllowCredentials(true);
+        config.setExposedHeaders(List.of("Content-Type"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;

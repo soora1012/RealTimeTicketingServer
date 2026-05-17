@@ -45,6 +45,10 @@ dependencies {
 
     //PostgreSQL
     runtimeOnly 'org.postgresql:postgresql'
+
+    //자바 단위테스트
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 }
 
 tasks.named('test') {

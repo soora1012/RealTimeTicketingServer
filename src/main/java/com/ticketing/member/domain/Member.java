@@ -17,8 +17,8 @@ public class Member {
     @Column(name = "member_pk")
     private long memberPk;
 
-    @Column(name = "member_id", nullable = false, unique = true, length = 50)
-    private String memberId;
+    @Column(name = "login_id", nullable = false, unique = true, length = 50)
+    private String loginId;
 
     @Column(name = "token",nullable = false, unique = true, length = 255)
     private String token;

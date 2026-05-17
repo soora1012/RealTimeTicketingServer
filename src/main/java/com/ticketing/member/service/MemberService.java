@@ -35,7 +35,7 @@ public class MemberService {
         if (keyword == null || keyword.trim().isEmpty()) {
             memberPage = memberRepository.findAll(pageable);
         } else {
-            memberPage = memberRepository.findByMemberIdContainingIgnoreCase(
+            memberPage = memberRepository.findByLoginIdContainingIgnoreCase(
                     keyword.trim(),
                     pageable
             );

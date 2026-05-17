@@ -1,4 +1,4 @@
-package com.ticketing.auth.cotroller;
+package com.ticketing.auth.controller;
 
 import com.ticketing.auth.dto.LoginResponse;
 import com.ticketing.auth.dto.LoginResult;

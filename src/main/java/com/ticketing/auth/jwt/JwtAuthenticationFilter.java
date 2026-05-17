@@ -33,12 +33,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (token != null) {
             try {
-                Long userId = tokenProvider.getUserId(token);
+                Long loginId = tokenProvider.getLoginId(token);
                 String role = tokenProvider.getRole(token);
 
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
-                                userId,
+                                loginId,
                                 null,
                                 List.of(new SimpleGrantedAuthority("ROLE_" + role))
                         );

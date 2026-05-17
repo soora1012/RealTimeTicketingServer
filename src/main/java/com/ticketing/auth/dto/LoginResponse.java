@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class LoginResponse {
-    private String userId;
+    private String loginId;
     private String password;
     private int passwordResetCount;
 

@@ -24,7 +24,7 @@ public class AuthService {
 
     @Transactional
     public LoginResult login(LoginResponse request) {
-        Member member = memberRepository.findByMemberId(request.getUserId())
+        Member member = memberRepository.findByLoginId(request.getLoginId())
                 .orElseThrow(() -> new ApiException(ErrorCode.LOGIN_FAILED));
 
         if (!passwordEncoder.matches(request.getPassword(), member.getPassword())) {
@@ -32,10 +32,10 @@ public class AuthService {
         }
         String token = jwtTokenProvider.createAccessToken(
                 member.getMemberPk(),
-                member.getMemberId()
+                member.getLoginId()
         );
         LoginResponse response = LoginResponse.builder()
-                .userId(member.getMemberId())
+                .loginId(member.getLoginId())
                 .password(member.getPassword())
                 .build();
         return new LoginResult(token, response);
@@ -43,7 +43,7 @@ public class AuthService {
 
     @Transactional
     public void resetPassword(PasswordResetResponse request) {
-        Member member = memberRepository.findByMemberId(request.getUserId())
+        Member member = memberRepository.findByLoginId(request.getLoginId())
                 .orElseThrow(() -> new ApiException(ErrorCode.LOGIN_FAILED));
 
         String encodedPassword = passwordEncoder.encode(request.getNewPassword());
