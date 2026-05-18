@@ -30,11 +30,13 @@ public class CorsConfig {
                 "OPTIONS"
         ));
 
-        // 허용 Header
         config.setAllowedHeaders(List.of("*"));
-        // 쿠키 / JWT Authorization 허용
+        config.setExposedHeaders(List.of(
+                "Set-Cookie",
+                "Content-Type"
+        ));
+        config.setMaxAge(3600L);
         config.setAllowCredentials(true);
-        config.setExposedHeaders(List.of("Content-Type"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
