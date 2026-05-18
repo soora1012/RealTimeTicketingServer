@@ -1,4 +1,4 @@
-package com.ticketing.concert.domain;
+package com.ticketing.seat.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,7 +25,12 @@ public class Reservation {
     @Column(name = "reserved_at")
     private Timestamp reserved_at;
 
-    @Column(name = "expired_at")
-    private Timestamp end_at;
+    @Column(name = "schedule_pk")
+    private long schedulePk;
 
+    @Column(name = "seat_pk")
+    private long seatPk;
+
+    @Column(name = "membeer_pk")
+    private long membeerPk;
 }

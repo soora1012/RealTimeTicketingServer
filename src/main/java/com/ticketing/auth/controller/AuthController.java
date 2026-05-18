@@ -33,6 +33,7 @@ public class AuthController {
                 .secure(securityProperties.getCookie().isSecure())
                 .sameSite(securityProperties.getCookie().getSameSite())
                 .path("/")
+                .domain("https://df2njav4b350g.cloudfront.net/")
                 .maxAge(Duration.ofMinutes(30))
                 .build();
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());

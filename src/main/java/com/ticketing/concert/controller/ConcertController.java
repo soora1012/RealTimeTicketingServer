@@ -22,12 +22,4 @@ public class ConcertController {
         return ApiResponse.ok(response);
     }
 
-
-    @PostMapping("/seat")
-    public ApiResponse<ConcertScheduleResponse> getConcertSeat(){
-
-        ConcertScheduleResponse response = concertService.getConcertSeat();
-        return ApiResponse.ok(response);
-    }
-
 }

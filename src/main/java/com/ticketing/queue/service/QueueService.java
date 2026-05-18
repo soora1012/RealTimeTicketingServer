@@ -87,10 +87,17 @@ public class QueueService {
 
     //대기열 떠나기
     public void leaveQueue(Long concertScheduleId, Long loginId) {
-        String key = QUEUE_KEY + concertScheduleId;
-        String value = String.valueOf(loginId);
+        String queueKey = QUEUE_KEY + concertScheduleId;
+        String queueValue = String.valueOf(loginId);
         redisTemplate.opsForZSet()
-                .remove(key, value);
+                .remove(queueKey, queueValue);
+    }
+
+
+
+    public void enterSeat(Long concertScheduleId, Long loginId) {
+        leaveQueue(concertScheduleId, loginId);
+        seatCheck(concertScheduleId, loginId);
     }
 
 

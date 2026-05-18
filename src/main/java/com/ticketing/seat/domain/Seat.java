@@ -1,4 +1,5 @@
-package com.ticketing.concert.domain;
+package com.ticketing.seat.domain;
+
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -30,4 +31,6 @@ public class Seat {
     @Column(name = "price")
     private int price = 0;
 
+    @Column(name = "concert_schedule_pk")
+    private long concertSchedulePk;
 }

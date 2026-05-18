@@ -18,7 +18,7 @@ public class QueueController {
     private final QueueService queueService;
     private final QueueSseService queueSseService;
 
-    @PostMapping("/enter/{concertScheduleId}")
+    @GetMapping("/enter/{concertScheduleId}")
     public ApiResponse<QueueResponse> enterQueue(@PathVariable Long concertScheduleId,
                                                  Authentication authentication) {
 
