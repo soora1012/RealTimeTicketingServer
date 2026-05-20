@@ -25,12 +25,12 @@ public class JwtTokenProvider {
         this.accessExpMin = accessExpMin;
     }
 
-    public String createAccessToken(Long loginId, String role) {
+    public String createAccessToken(Long memberPk, String role) {
         Instant now = Instant.now();
         Instant exp = now.plus(accessExpMin, ChronoUnit.MINUTES);
 
         return Jwts.builder()
-                .setSubject(String.valueOf(loginId))
+                .setSubject(String.valueOf(memberPk))
                 .claim("role", role)
                 .setIssuedAt(Date.from(now))
                 .setExpiration(Date.from(exp))
@@ -46,7 +46,7 @@ public class JwtTokenProvider {
                 .getBody();
     }
 
-    public Long getLoginId(String token) {
+    public Long getMemberPk(String token) {
         return Long.valueOf(getClaims(token).getSubject());
     }
 

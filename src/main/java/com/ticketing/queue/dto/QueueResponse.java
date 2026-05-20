@@ -8,7 +8,7 @@ import lombok.Getter;
 @Builder
 public class QueueResponse {
     private Long concertScheduleId;
-    private Long loginId;
+    private Long memberPk;
 
     // 내 대기번호
     private Long myPosition;
@@ -21,13 +21,13 @@ public class QueueResponse {
 
 
     public static QueueResponse of(Long concertScheduleId,
-                                     Long loginId,
+                                     Long memberPk,
                                      Long rank,
                                      Long totalCount,
                                      boolean active) {
         return QueueResponse.builder()
                 .concertScheduleId(concertScheduleId)
-                .loginId(loginId)
+                .memberPk(memberPk)
                 .myPosition(rank == null ? null : rank + 1)
                 .aheadCount(rank == null ? null : rank)
                 .totalCount(totalCount)
@@ -36,11 +36,11 @@ public class QueueResponse {
     }
 
     public static QueueResponse of(Long concertScheduleId,
-                                   Long loginId,
+                                   Long memberPk,
                                    boolean active) {
         return QueueResponse.builder()
                 .concertScheduleId(concertScheduleId)
-                .loginId(loginId)
+                .memberPk(memberPk)
                 .myPosition(0L)
                 .aheadCount(0L)
                 .totalCount(0L)

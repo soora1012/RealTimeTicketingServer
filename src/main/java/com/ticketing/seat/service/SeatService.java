@@ -39,10 +39,10 @@ public class SeatService {
 
     //좌석예약 완료
     @Transactional
-    public void reservationSeat(Long seatId, Long concertScheduleId, Long loginId) {
+    public void reservationSeat(Long seatId, Long concertScheduleId, Long memberPk) {
         //Redis TTL 삭제
         Reservation reservation = Reservation.builder()
-                .memberPk(loginId)
+                .memberPk(memberPk)
                 .state(ReservationStatus.RESERVED)
                 .seat(Seat.builder().seatPk(seatId).build())
                 .concertSchedule(ConcertSchedule.builder().concertSchedulePk(concertScheduleId).build())
@@ -55,9 +55,9 @@ public class SeatService {
 
     //좌석예약 정보
     @Transactional(readOnly = true)
-    public List<ReservationResponse> reservationInfo(Long loginId) {
+    public List<ReservationResponse> reservationInfo(Long memberPk) {
         return reservationRepository
-                .findAllReservationList(loginId)
+                .findAllReservationList(memberPk)
                 .stream()
                 .map(ReservationResponse::from)
                 .toList();

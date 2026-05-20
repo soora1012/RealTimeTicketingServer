@@ -38,12 +38,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (token != null) {
             try {
-                Long loginId = tokenProvider.getLoginId(token);
+                Long getMemberPk = tokenProvider.getMemberPk(token);
                 String role = tokenProvider.getRole(token);
 
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
-                                loginId,
+                                getMemberPk,
                                 null,
                                 List.of(new SimpleGrantedAuthority("ROLE_" + role))
                         );
@@ -73,6 +73,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String resolveToken(HttpServletRequest request) {
+        String bearerToken = resolveBearer(request);
+        if (bearerToken != null) {
+            return bearerToken;
+        }
+
         if (request.getCookies() == null) {
             return null;
         }

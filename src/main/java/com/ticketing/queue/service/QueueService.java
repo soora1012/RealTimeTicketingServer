@@ -20,10 +20,10 @@ public class QueueService {
     private static final String SEAT_KEY = "concert:seat:";
 
     //대기열 등록
-    public QueueResponse enterQueue(Long concertScheduleId, Long loginId) {
+    public QueueResponse enterQueue(Long concertScheduleId, Long memberPk) {
         String queueKey = QUEUE_KEY + concertScheduleId;
-        String queueValue = String.valueOf(loginId);
-        boolean check = seatCheck(concertScheduleId, loginId);
+        String queueValue = String.valueOf(memberPk);
+        boolean check = seatCheck(concertScheduleId, memberPk);
         if(check) {
             //중복체크
             Double queueExist = redisTemplate.opsForZSet()
@@ -40,7 +40,7 @@ public class QueueService {
                     .zCard(queueKey);
             return QueueResponse.of(
                     concertScheduleId,
-                    loginId,
+                    memberPk,
                     queueRank,
                     queueTotalCount,
                     true);
@@ -49,15 +49,15 @@ public class QueueService {
             //바로 좌석예약 진입
             return QueueResponse.of(
                     concertScheduleId,
-                    loginId,
+                    memberPk,
                     false);
         }
     }
 
 
-    private boolean seatCheck(Long concertScheduleId, Long loginId) {
+    private boolean seatCheck(Long concertScheduleId, Long memberPk) {
         String seatKey = SEAT_KEY + concertScheduleId;
-        String seatValue = String.valueOf(loginId);
+        String seatValue = String.valueOf(memberPk);
 
 
         Long seatTotalCount = redisTemplate.opsForZSet()
@@ -86,18 +86,18 @@ public class QueueService {
 
 
     //대기열 떠나기
-    public void leaveQueue(Long concertScheduleId, Long loginId) {
+    public void leaveQueue(Long concertScheduleId, Long memberPk) {
         String queueKey = QUEUE_KEY + concertScheduleId;
-        String queueValue = String.valueOf(loginId);
+        String queueValue = String.valueOf(memberPk);
         redisTemplate.opsForZSet()
                 .remove(queueKey, queueValue);
     }
 
 
 
-    public void enterSeat(Long concertScheduleId, Long loginId) {
-        leaveQueue(concertScheduleId, loginId);
-        seatCheck(concertScheduleId, loginId);
+    public void enterSeat(Long concertScheduleId, Long memberPk) {
+        leaveQueue(concertScheduleId, memberPk);
+        seatCheck(concertScheduleId, memberPk);
     }
 
 

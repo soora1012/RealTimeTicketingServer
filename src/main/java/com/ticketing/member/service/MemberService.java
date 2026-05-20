@@ -49,9 +49,9 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public MemberResponse getMyPage(Long loginId) {
+    public MemberResponse getMyPage(Long memberPk) {
         return  memberRepository
-                .findById(loginId)
+                .findById(memberPk)
                 .map(MemberResponse::from)
                 .orElseThrow(() ->  new ApiException(ErrorCode.LOGIN_FAILED));
     }

@@ -1,7 +1,6 @@
 package com.ticketing.auth.service;
 
 import com.ticketing.auth.dto.LoginResponse;
-import com.ticketing.auth.dto.LoginResult;
 import com.ticketing.auth.dto.PasswordResetResponse;
 import com.ticketing.auth.jwt.JwtTokenProvider;
 import com.ticketing.global.error.ApiException;
@@ -23,7 +22,7 @@ public class AuthService {
 
 
     @Transactional
-    public LoginResult login(LoginResponse request) {
+    public LoginResponse login(LoginResponse request) {
         Member member = memberRepository.findByLoginId(request.getLoginId())
                 .orElseThrow(() -> new ApiException(ErrorCode.LOGIN_FAILED));
 
@@ -32,13 +31,14 @@ public class AuthService {
         }
         String token = jwtTokenProvider.createAccessToken(
                 member.getMemberPk(),
-                member.getLoginId()
+                "USER"
         );
-        LoginResponse response = LoginResponse.builder()
+
+        return LoginResponse.builder()
+                .accessToken(token)
                 .loginId(member.getLoginId())
-                .password(member.getPassword())
+                .passwordResetCount(member.getPasswordResetCount())
                 .build();
-        return new LoginResult(token, response);
     }
 
     @Transactional

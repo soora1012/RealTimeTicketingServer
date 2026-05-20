@@ -10,6 +10,7 @@ import lombok.Setter;
 public class LoginResponse {
     private String loginId;
     private String password;
+    private String accessToken;
     private int passwordResetCount;
 
 }
