@@ -5,6 +5,7 @@ import com.ticketing.global.pagination.PageResponse;
 import com.ticketing.member.dto.MemberResponse;
 import com.ticketing.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,6 +21,14 @@ public class MemberController {
                                                                    @RequestParam(required = false) String keyword) {
 
         PageResponse<MemberResponse> response = memberService.getMemberList(page, size, keyword);
+        return ApiResponse.ok(response);
+    }
+
+
+    @GetMapping("/mypage")
+    public ApiResponse<MemberResponse> getMyPage( Authentication authentication) {
+        Long loginId = (Long) authentication.getPrincipal();
+        MemberResponse response = memberService.getMyPage(loginId);
         return ApiResponse.ok(response);
     }
 }

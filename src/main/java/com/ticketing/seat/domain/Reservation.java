@@ -1,7 +1,9 @@
 package com.ticketing.seat.domain;
 
+import com.ticketing.concert.domain.ConcertSchedule;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 
@@ -19,18 +21,27 @@ public class Reservation {
     @Column(name = "reservation_pk")
     private long reservationPk;
 
-    @Column(name = "state", length = 20)
-    private String state;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state")
+    private ReservationStatus state;
 
-    @Column(name = "reserved_at")
-    private Timestamp reserved_at;
+    @CreationTimestamp
+    @Column(name = "reserved_at", updatable = false)
+    private Timestamp reservedAt;
 
-    @Column(name = "schedule_pk")
-    private long schedulePk;
+    @Column(name = "member_pk")
+    private long memberPk;
 
-    @Column(name = "seat_pk")
-    private long seatPk;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "concert_schedule_pk", nullable = false)
+    private ConcertSchedule concertSchedule;
 
-    @Column(name = "membeer_pk")
-    private long membeerPk;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seat_pk", nullable = false)
+    private Seat seat;
+
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private Timestamp createdAt;
+
 }

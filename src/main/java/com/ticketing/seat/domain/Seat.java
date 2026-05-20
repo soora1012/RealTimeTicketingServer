@@ -33,4 +33,14 @@ public class Seat {
 
     @Column(name = "concert_schedule_pk")
     private long concertSchedulePk;
+
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "seat_pk",
+            referencedColumnName = "seat_pk",
+            insertable = false,
+            updatable = false
+    )
+    private Reservation reservation;
 }

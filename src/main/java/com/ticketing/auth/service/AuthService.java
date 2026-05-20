@@ -28,7 +28,7 @@ public class AuthService {
                 .orElseThrow(() -> new ApiException(ErrorCode.LOGIN_FAILED));
 
         if (!passwordEncoder.matches(request.getPassword(), member.getPassword())) {
-            throw new IllegalArgumentException("아이디 또는 비밀번호가 올바르지 않습니다.");
+            throw new ApiException(ErrorCode.LOGIN_FAILED);
         }
         String token = jwtTokenProvider.createAccessToken(
                 member.getMemberPk(),

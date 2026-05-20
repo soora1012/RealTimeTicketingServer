@@ -1,6 +1,8 @@
 package com.ticketing.member.service;
 
 
+import com.ticketing.global.error.ApiException;
+import com.ticketing.global.error.ErrorCode;
 import com.ticketing.global.pagination.PageResponse;
 import com.ticketing.member.domain.Member;
 import com.ticketing.member.dto.MemberResponse;
@@ -44,6 +46,14 @@ public class MemberService {
         Page<MemberResponse> responsePage = memberPage.map(MemberResponse::from);
 
         return PageResponse.from(responsePage);
+    }
+
+    @Transactional(readOnly = true)
+    public MemberResponse getMyPage(Long loginId) {
+        return  memberRepository
+                .findById(loginId)
+                .map(MemberResponse::from)
+                .orElseThrow(() ->  new ApiException(ErrorCode.LOGIN_FAILED));
     }
 
 }

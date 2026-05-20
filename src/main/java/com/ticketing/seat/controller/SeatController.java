@@ -2,6 +2,8 @@ package com.ticketing.seat.controller;
 
 import com.ticketing.global.api.ApiResponse;
 import com.ticketing.queue.service.QueueService;
+import com.ticketing.seat.dto.ReservationRequest;
+import com.ticketing.seat.dto.ReservationResponse;
 import com.ticketing.seat.dto.SeatResponse;
 import com.ticketing.seat.service.SeatService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,7 @@ public class SeatController {
     private final SeatService seatService;
     private final QueueService queueService;
 
+    //콘서트 좌석 리스트
     @GetMapping("/list/{concertScheduleId}")
     public ApiResponse<List<SeatResponse>> getSeatList(@PathVariable Long concertScheduleId,
                                                        Authentication authentication) {
@@ -29,7 +32,7 @@ public class SeatController {
         return ApiResponse.ok(response);
     }
 
-
+    //좌석예약 홀드
     @GetMapping("/hold/{seatId}")
     public ApiResponse<SeatResponse> holdSeat(@PathVariable Long seatId,
                                                                Authentication authentication) {
@@ -39,11 +42,24 @@ public class SeatController {
     }
 
 
-    @GetMapping("/reservation/{seatId}")
-    public ApiResponse<SeatResponse> reservationSeat(@PathVariable Long seatId,
-                                              Authentication authentication) {
+    //좌석예약 완료
+    @PostMapping("/reservation")
+    public ApiResponse<Void> reservationSeat(@RequestBody ReservationRequest reservationRequest,
+                                                     Authentication authentication) {
         Long loginId = (Long) authentication.getPrincipal();
-        SeatResponse response = seatService.reservationSeat(seatId);
+        seatService.reservationSeat(
+                reservationRequest.getSeatId(),
+                reservationRequest.getConcertScheduleId(),
+                loginId);
+        return ApiResponse.ok();
+    }
+
+
+    //좌석예약 정보 
+    @GetMapping("/reservationInfo")
+    public ApiResponse<List<ReservationResponse>> reservationInfo(Authentication authentication) {
+        Long loginId = (Long) authentication.getPrincipal();
+        List<ReservationResponse> response = seatService.reservationInfo(loginId);
         return ApiResponse.ok(response);
     }
 
