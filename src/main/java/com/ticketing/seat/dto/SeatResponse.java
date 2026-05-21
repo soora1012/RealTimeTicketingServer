@@ -14,7 +14,7 @@ public class SeatResponse {
     private final long concertScheduleId;
     private final String sectionName;
     private final String rowName;
-    private final String seatNumber;
+    private final int seatNumber;
     private final int price;
     private final ReservationStatus state;
 

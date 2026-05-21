@@ -25,7 +25,7 @@ public class Seat {
     private String rowName;
 
     @Column(name = "seat_number")
-    private String seatNumber;
+    private int seatNumber;
 
     @Builder.Default
     @Column(name = "price")

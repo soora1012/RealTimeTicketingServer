@@ -16,7 +16,7 @@ public interface SeatRepository extends JpaRepository<Seat, Long> {
     FROM Seat s
     LEFT JOIN FETCH s.reservation
     WHERE s.concertSchedulePk = :concertSchedulePk
-    ORDER BY s.rowName ASC, CAST(s.seatNumber AS integer) ASC
+    ORDER BY s.rowName ASC, s.seatNumber ASC
 """)
     List<Seat> findAllWithReservation(Long concertSchedulePk);
 

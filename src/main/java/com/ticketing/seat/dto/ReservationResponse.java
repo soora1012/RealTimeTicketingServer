@@ -20,7 +20,7 @@ public class ReservationResponse {
 
     private final String sectionName;
     private final String rowName;
-    private final String seatNumber;
+    private final int seatNumber;
     private final int price;
 
     private final long concertId;
