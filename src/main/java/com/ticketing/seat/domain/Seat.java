@@ -1,6 +1,7 @@
 package com.ticketing.seat.domain;
 
 
+import com.ticketing.reservation.domain.Reservation;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,15 +33,17 @@ public class Seat {
     private int price = 0;
 
     @Column(name = "concert_schedule_pk")
-    private long concertSchedulePk;
+    private Long concertSchedulePk;
 
+    @Column(name = "current_reservation_pk")
+    private Long currentReservationPk;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(
-            name = "seat_pk",
-            referencedColumnName = "seat_pk",
+            name = "current_reservation_pk",
+            referencedColumnName = "reservation_pk",
             insertable = false,
             updatable = false
     )
-    private Reservation reservation;
+    private Reservation currentReservation;
 }

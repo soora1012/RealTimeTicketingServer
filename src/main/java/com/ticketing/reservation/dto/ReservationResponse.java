@@ -1,8 +1,8 @@
-package com.ticketing.seat.dto;
+package com.ticketing.reservation.dto;
 
 
-import com.ticketing.seat.domain.Reservation;
-import com.ticketing.seat.domain.ReservationStatus;
+import com.ticketing.reservation.domain.Reservation;
+import com.ticketing.reservation.domain.ReservationStatus;
 import lombok.Builder;
 import lombok.Getter;
 

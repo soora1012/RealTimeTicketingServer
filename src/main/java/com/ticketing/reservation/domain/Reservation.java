@@ -1,6 +1,7 @@
-package com.ticketing.seat.domain;
+package com.ticketing.reservation.domain;
 
 import com.ticketing.concert.domain.ConcertSchedule;
+import com.ticketing.seat.domain.Seat;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -30,7 +31,7 @@ public class Reservation {
     private Timestamp reservedAt;
 
     @Column(name = "member_pk")
-    private long memberPk;
+    private Long memberPk;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "concert_schedule_pk", nullable = false)

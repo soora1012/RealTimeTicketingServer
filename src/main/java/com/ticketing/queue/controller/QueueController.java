@@ -22,26 +22,23 @@ public class QueueController {
     public ApiResponse<QueueResponse> enterQueue(@PathVariable Long concertScheduleId,
                                                  Authentication authentication) {
 
-        Long memberPk = (Long) authentication.getPrincipal();
+        Long memberId = (Long) authentication.getPrincipal();
         QueueResponse queueResponse = queueService.enterQueue(
                 concertScheduleId,
-                memberPk
+                memberId
         );
         return ApiResponse.ok(queueResponse);
     }
-
 
     @DeleteMapping("/leave/{concertScheduleId}")
     public ApiResponse<Void> leaveQueue(@PathVariable Long concertScheduleId,
                                      Authentication authentication) {
 
-        Long memberPk = (Long) authentication.getPrincipal();
+        Long memberId = (Long) authentication.getPrincipal();
         queueService.leaveQueue(
                 concertScheduleId,
-                memberPk
+                memberId
         );
-
-        queueSseService.sendQueueStatusToAll(concertScheduleId);
         return ApiResponse.ok();
     }
 
@@ -50,7 +47,7 @@ public class QueueController {
     @GetMapping(value = "/subscribe/{concertScheduleId}", produces = "text/event-stream")
     public SseEmitter subscribe(@PathVariable Long concertScheduleId,
                                 Authentication authentication) {
-        Long memberPk = (Long) authentication.getPrincipal();
-        return queueSseService.subscribe(concertScheduleId, memberPk);
+        Long memberId = (Long) authentication.getPrincipal();
+        return queueSseService.subscribe(concertScheduleId, memberId);
     }
 }

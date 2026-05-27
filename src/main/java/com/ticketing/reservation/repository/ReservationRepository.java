@@ -1,7 +1,7 @@
-package com.ticketing.seat.repository;
+package com.ticketing.reservation.repository;
 
 
-import com.ticketing.seat.domain.Reservation;
+import com.ticketing.reservation.domain.Reservation;
 import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,14 +12,13 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     @Query("""
-    SELECT r
+    SELECT s
     FROM Reservation r
-    LEFT JOIN FETCH r.seat s
-    LEFT JOIN FETCH r.concertSchedule cs
-    LEFT JOIN FETCH cs.concert c
+    JOIN r.seat s
     WHERE r.memberPk = :memberPk
-    ORDER BY r.createdAt desc
+      AND r.state IN ('RESERVED', 'CANCELLED')
+    ORDER BY r.createdAt DESC
 """)
-    List<Reservation> findAllReservationList(@Param("memberPk") long memberPk);
+    List<Reservation> findAllReservationList(@Param("memberPk") Long memberPk);
 
 }

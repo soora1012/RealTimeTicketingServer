@@ -31,7 +31,7 @@ public class AuthService {
         }
         String token = jwtTokenProvider.createAccessToken(
                 member.getMemberPk(),
-                "USER"
+                member.getRole()
         );
 
         return LoginResponse.builder()

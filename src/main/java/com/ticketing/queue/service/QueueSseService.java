@@ -21,8 +21,8 @@ public class QueueSseService {
     private final Map<String, SseEmitter> emitters = new ConcurrentHashMap<>();
 
 
-    public SseEmitter subscribe(Long concertScheduleId, Long memberPk) {
-        String emitterKey = concertScheduleId + ":" + memberPk;
+    public SseEmitter subscribe(Long concertScheduleId, Long memberId) {
+        String emitterKey = concertScheduleId + ":" + memberId;
         SseEmitter emitter = new SseEmitter(SSE_TIMEOUT);
         emitters.put(emitterKey, emitter);
 
@@ -41,16 +41,16 @@ public class QueueSseService {
             if (!key.startsWith(concertScheduleId + ":")) {
                 return;
             }
-            Long memberPk = Long.valueOf(key.split(":")[1]);
-            sendQueueStatus(concertScheduleId, memberPk);
+            Long memberId = Long.valueOf(key.split(":")[1]);
+            sendQueueStatus(concertScheduleId, memberId);
         });
     }
 
 
 
     //특정 1인한테 데이터 전송
-    public void sendQueueStatus(Long concertScheduleId, Long memberPk) {
-        String emitterKey = concertScheduleId + ":" + memberPk;
+    public void sendQueueStatus(Long concertScheduleId, Long memberId) {
+        String emitterKey = concertScheduleId + ":" + memberId;
         SseEmitter emitter = emitters.get(emitterKey);
 
         if (emitter == null) {
@@ -60,7 +60,7 @@ public class QueueSseService {
         try {
             QueueResponse response = queueService.enterQueue(
                     concertScheduleId,
-                    memberPk
+                    memberId
             );
 
             //프론트에 데이터 전송

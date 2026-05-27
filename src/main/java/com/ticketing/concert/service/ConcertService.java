@@ -24,11 +24,4 @@ public class ConcertService {
                 .map(ConcertScheduleResponse::from)
                 .toList();
     }
-
-
-    @Transactional(readOnly = true)
-    public ConcertScheduleResponse getConcertSeat() {
-        return null;
-    }
-
-    }
+}

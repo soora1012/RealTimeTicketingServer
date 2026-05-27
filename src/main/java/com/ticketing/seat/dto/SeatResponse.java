@@ -1,7 +1,7 @@
 package com.ticketing.seat.dto;
 
 
-import com.ticketing.seat.domain.ReservationStatus;
+import com.ticketing.reservation.domain.ReservationStatus;
 import com.ticketing.seat.domain.Seat;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,8 +15,8 @@ public class SeatResponse {
     private final String sectionName;
     private final String rowName;
     private final int seatNumber;
-    private final int price;
     private final ReservationStatus state;
+    private final int price;
 
 
     public static SeatResponse from(Seat seat) {
@@ -26,10 +26,10 @@ public class SeatResponse {
                 .sectionName(seat.getSectionName())
                 .rowName(seat.getRowName())
                 .seatNumber(seat.getSeatNumber())
-                .price(seat.getPrice())
-                .state(seat.getReservation() != null
-                        ? seat.getReservation().getState()
+                .state( seat.getCurrentReservation() != null
+                        ? seat.getCurrentReservation().getState()
                         : ReservationStatus.AVAILABLE)
+                .price(seat.getPrice())
                 .build();
     }
 }

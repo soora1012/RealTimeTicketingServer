@@ -27,8 +27,8 @@ public class MemberController {
 
     @GetMapping("/mypage")
     public ApiResponse<MemberResponse> getMyPage( Authentication authentication) {
-        Long memberPk = (Long) authentication.getPrincipal();
-        MemberResponse response = memberService.getMyPage(memberPk);
+        Long memberId = (Long) authentication.getPrincipal();
+        MemberResponse response = memberService.getMyPage(memberId);
         return ApiResponse.ok(response);
     }
 }
