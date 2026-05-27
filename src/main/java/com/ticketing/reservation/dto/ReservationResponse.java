@@ -12,9 +12,9 @@ import java.sql.Timestamp;
 @Builder
 public class ReservationResponse {
 
-    private final long reservationId;
-    private final long seatId;
-    private final long concertScheduleId;
+    private final Long reservationId;
+    private final Long seatId;
+    private final Long concertScheduleId;
     private final ReservationStatus reservationState;
     private final Timestamp reservedAt;
 
@@ -23,7 +23,7 @@ public class ReservationResponse {
     private final int seatNumber;
     private final int price;
 
-    private final long concertId;
+    private final Long concertId;
     private final int concertSequence;
 
     private final String concertTitle;

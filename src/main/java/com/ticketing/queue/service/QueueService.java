@@ -111,8 +111,12 @@ public class QueueService {
     }
 
 
-    public Boolean lockSeat(Long seatId, Long memberId) {
-        String key = "seat:lock:" + seatId;
+    public Boolean lockSeat(Long seatId, Long concertScheduleId, Long memberId) {
+        String key = "seat:lock:" +
+                        seatId + ":" +
+                        concertScheduleId + ":" +
+                        memberId;
+
         String value = String.valueOf(memberId);
         return redisTemplate.opsForValue()
                 .setIfAbsent(key, value, Duration.ofMinutes(TTL_TIME));

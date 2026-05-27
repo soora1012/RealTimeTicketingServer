@@ -12,11 +12,11 @@ import java.util.List;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     @Query("""
-    SELECT s
+    SELECT r
     FROM Reservation r
     JOIN r.seat s
     WHERE r.memberPk = :memberPk
-      AND r.state IN ('RESERVED', 'CANCELLED')
+    AND r.state IN ('RESERVED', 'CANCELLED')
     ORDER BY r.createdAt DESC
 """)
     List<Reservation> findAllReservationList(@Param("memberPk") Long memberPk);

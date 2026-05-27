@@ -30,7 +30,7 @@ public class ReservationController {
         Long memberId = (Long) authentication.getPrincipal();
         Long seatId = reservationRequest.getSeatId();
         Long concertScheduleId = reservationRequest.getConcertScheduleId();
-        if(!queueService.lockSeat(seatId, memberId)){
+        if(!queueService.lockSeat(seatId, concertScheduleId, memberId)){
             return ApiResponse.ok(ReservationHoldResponse.builder()
                     .isHold(false).build());
         }
