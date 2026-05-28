@@ -1,6 +1,11 @@
 spring:
   profiles:
     active: local
+  datasource:
+    hikari:
+      maximum-pool-size: 50
+      minimum-idle: 10
+      connection-timeout: 5000
 
   application:
     name: ticketing-server
@@ -14,6 +19,12 @@ spring:
         format_sql: true
 server:
   port: 8147
+  tomcat:
+    threads:
+      max: 300
+      min-spare: 50
+    accept-count: 500
+    max-connections: 2000
 
 logging:
   level:
