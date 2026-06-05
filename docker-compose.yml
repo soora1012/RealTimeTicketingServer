@@ -11,6 +11,8 @@ services:
       POSTGRES_PASSWORD: 1234
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ticketing-network
 
   redis:
     image: redis:7
@@ -19,6 +21,9 @@ services:
     ports:
       - "2356:6379"
     restart: always
+    networks:
+      - ticketing-network
+
 
   spring:
     build:
@@ -33,6 +38,8 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: prod
     restart: always
+    networks:
+      - ticketing-network
 
   prometheus:
     image: prom/prometheus
