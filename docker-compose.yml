@@ -6,6 +6,7 @@ services:
     ports:
       - "1245:5432"
     environment:
+      TZ: Asia/Seoul
       POSTGRES_DB: ticketing
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: 1234
@@ -21,6 +22,8 @@ services:
     ports:
       - "2356:6379"
     restart: always
+    environment:
+      TZ: Asia/Seoul
     networks:
       - ticketing-network
 
@@ -36,6 +39,7 @@ services:
     ports:
       - "8147:8147"
     environment:
+      TZ: Asia/Seoul
       SPRING_PROFILES_ACTIVE: prod
     restart: always
     networks:
@@ -48,8 +52,11 @@ services:
       - "9090:9090"
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
     depends_on:
       - spring
+    environment:
+      TZ: Asia/Seoul
     networks:
       - ticketing-network
 
@@ -59,6 +66,7 @@ services:
     ports:
       - "3000:3000"
     environment:
+      TZ: Asia/Seoul
       GF_SECURITY_ADMIN_USER: admin
       GF_SECURITY_ADMIN_PASSWORD: admin
     depends_on:
