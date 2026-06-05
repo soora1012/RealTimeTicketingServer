@@ -34,3 +34,19 @@ security:
   jwt:
     secret: "ticketing-server-jwt-secret-key-ticketing-server-jwt-secret-key"
     access-exp-min: 60
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+
+  endpoint:
+    health:
+      show-details: always
+
+  metrics:
+    tags:
+      application: ticketing-server
+
+kind: Application

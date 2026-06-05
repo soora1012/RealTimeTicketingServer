@@ -36,5 +36,32 @@ services:
       SPRING_PROFILES_ACTIVE: prod
     restart: always
 
+  prometheus:
+    image: prom/prometheus
+    container_name: ticketing-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - spring
+    networks:
+      - ticketing-network
+
+  grafana:
+    image: grafana/grafana
+    container_name: ticketing-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    depends_on:
+      - prometheus
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - ticketing-network
+
 volumes:
   postgres_data:
