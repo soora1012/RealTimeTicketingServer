@@ -21,7 +21,6 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
 
 
-    @Transactional
     public LoginResponse login(LoginResponse request) {
         Member member = memberRepository.findByLoginId(request.getLoginId())
                 .orElseThrow(() -> new ApiException(ErrorCode.LOGIN_FAILED));
