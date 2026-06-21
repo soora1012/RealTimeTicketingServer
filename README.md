@@ -27,7 +27,7 @@
 
 ### 2️⃣ Database
 - PostgreSQL 15
-- Redis
+- Redis (Redisson 분산 락 구현 완료)
 
 ### 3️⃣ DevOps / Infra
 - Docker
@@ -141,7 +141,6 @@ src
 - Kafka 기반 이벤트 아키텍처
 - 다중 서버 환경 Scale-Out
 - Kubernetes 환경 구성
-- 부하 테스트 자동화
 - 좌석 예약 분산 락 고도화
 ------------------------------
 # 프로젝트 정리
